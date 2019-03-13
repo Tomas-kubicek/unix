@@ -1,3 +1,4 @@
+#!/bin/sh
 if [ "$1" == "--typ" ]; then
 	shift 
 	if [ -e "$1" ]; then
