@@ -1,0 +1,22 @@
+1
+Podle manuálové stránky prikazu shift, pokud je parametr vetsi nez soucasny
+pocet argumentu (ulozeno v promene $#) tak vrati neco jineho nez nula a
+nic neudela
+2
+Čo robí premenná $#? Vypisuje soucasny pocet parametru
+A zápis ${#premenna}? Vypise pocet znaku promenne
+A čo ${!premenna}? Pokud je premmena cislo rekneme i, tak to vypise i-ty
+argument
+A čo výraz ${premenna:-vyraz}? Pokud je premenna nedefinovana pripadne null,
+tak se misto hodnoty pouzije vyraz, jinak premena.
+A ${premenna:cislo}? Reprezetuje od offsetu prvniho cisla
+A ${premenna:cislo:cislo}? Reprezetuje od offsetu prvniho cisla a vezme pocet
+jako ve druhem cisle
+Čo robí zápis ${premenna/vyraz/text}? Nahradi prvni výskyt vyrazu v promenne
+textem
+čo ${premenna//vyraz/text}? Nahradi vsechny výskyty vyrazu v promenne
+textem
+Može hocikde byť ako premenna použítý @, tak ako v f7 a f8?
+{#@} misto delek jednotlivych argumentu vrati pocet argumentu, obecne pokud je
+promena array tak vrati delku arraye. Jinak co jsem zkousel tak to moc
+nefunugje.
