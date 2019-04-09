@@ -88,7 +88,7 @@ elif [ "$1" = "-p" -o "$1" = "--part" ]; then
 	tfile=$(mktemp /tmp/middle.XXX)
 	cat "$input" >$tfile
 	lines=`wc -l <$tfile`
-	ceil `echo "$lines / $B" |bc -l`
+	ceil `echo "scale=3; $lines / $B" |bc -l`
 	NUMB=$output
 	"$0" -l "$(( ($A-1)*${NUMB} + 1 ))-$(( ${A}*${NUMB} ))" "$tfile"
 else
