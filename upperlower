@@ -1,0 +1,67 @@
+#!/bin/sh
+#if change is equal to 0 then upper to lower, if 1 then lower to upper
+change=0
+#if we run out of arguments and none of them were a directory we call renameDirectories on . 
+numberOfD=0
+
+
+#WARNING directories must not have / at the end in the cmd line 
+
+
+#if a directory name is given in the arguments of upperlower I do not change the name of that directory only its children, this is extrapolated from the example because if no directory is given it is called on ./ and the name of ./ is not changed
+renameDirectories (){
+	local arg
+	local regexp
+	local name
+	local prefix
+	local newName
+	local newFileName
+	for arg in "$1"/*; do
+		echo "$arg"
+		if ! [[ -e "$arg"  ]]; then
+			return 0
+		fi
+		if [[ -d "$arg" ]]; then
+			renameDirectories "$arg"
+		fi
+		if [[ change -eq 0 ]]; then
+			regexp="/[^[:lower:]]*$"
+		else
+			regexp="/[^[:upper:]]*$"
+		fi
+		
+		if [[ "$arg" =~ $regexp ]]; then 
+			name=`echo "$arg" | awk 'BEGIN{FS="/"}{print $NF}'`
+			prefix=`echo "$arg" | awk -v var="$name" 'BEGIN{FS="/"}{print substr($0,1,length($0)-length(var))}'`
+			if [[ change -eq 0 ]]; then
+				newName=`echo "$name" | awk '{print tolower($0)}'`
+			else
+				newName=`echo "$name" | awk '{print toupper($0)}'`
+			fi
+			newFileName="$prefix""$newName"
+			if [[ -e "$newFileName" ]]; then
+				echo Error: Collision on file "$arg" >&2
+			else
+				mv "$arg" "$newFileName"
+			fi
+
+		fi
+	done
+}
+
+while [ $# -gt 0 ]; do
+	if [ "$1" = "-r" ]; then
+		change=$((($change +1)%2))
+	elif [ -d "$1" ]; then
+		renameDirectories "$1"
+		numberOfD=1
+	else
+		echo "Argument is neither a directory nor '-r'." >&2
+	fi
+	shift 1
+done
+
+if [ $numberOfD -eq 0 ]; then
+	renameDirectories "."
+fi
+
