@@ -1,0 +1,9 @@
+Running start_game.sh without -c flag will start the server and client for you. You can also use -l "FILE_PATH" to load saved game and by using -p "black|white" to pick your color.
+-l and -p cannot be used while using -c flag.
+The second player has to use -c "IP:PORT" to connect and will be assigned the other color.
+While its your turn you can use these action: move, pass, exit, save
+	move: After using move you must enter coordinates in this form "x,y"
+	pass: Pass your turn. After 2 consecutive passes the game will end
+	exit: Exits the game.
+	save: Type valid file_name to save current board.
+Scoring: your points are equal to empty nodes which are neighboured only by your stones + captured stones of the enemy. White player also gets 4 points advantage for starting second and should the points be equal the white player will win.
